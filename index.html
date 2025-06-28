@@ -195,20 +195,125 @@
             font-size: 1.5rem;
         }
 
+        /* Mobile menu specific styles */
+        .mobile-menu {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px; /* Adjust as needed for menu content */
+            opacity: 1;
+        }
+
         /* Ensure form labels and inputs are aligned for desktop */
         @media (min-width: 768px) {
             .form-group-creative label {
                 text-align: left;
             }
         }
+
+        /* Styles for the new "Site Inclusions" section */
+        .inclusions-list li {
+            position: relative;
+            padding-left: 1.75rem; /* Space for the checkmark */
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem; /* text-lg */
+            color: #333;
+        }
+
+        .inclusions-list li::before {
+            content: '✅'; /* Checkmark emoji */
+            position: absolute;
+            left: 0;
+            color: #10B981; /* Green-500 */
+        }
+
+        .added-features-list li {
+            padding-left: 2rem; /* Indent for added features */
+            margin-bottom: 0.5rem;
+            font-size: 1rem; /* text-base */
+            color: #555;
+            position: relative;
+        }
+
+        .added-features-list li::before {
+            content: '+';
+            position: absolute;
+            left: 0.75rem;
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        /* Modal styles for "Add More Features" */
+        .feature-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 60; /* Higher than quote modal */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .feature-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .feature-modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 28rem; /* Equivalent to max-w-md */
+            width: 100%;
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .feature-modal.active .feature-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .feature-checkbox-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .feature-checkbox-group input[type="checkbox"] {
+            margin-right: 0.75rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: #f97316;
+            cursor: pointer;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body>
 
     <header class="bg-white shadow-sm py-4">
         <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#" class="text-3xl font-bold text-f97316">Your<span class="text-gray-700">Web</span></a>
-            <nav>
+            <a href="#" class="text-3xl font-bold text-f97316">Creative<span class="text-gray-700">365.</span></a>
+            
+            <nav class="hidden md:block">
                 <ul class="flex space-x-6">
                     <li><a href="#samples" class="text-gray-600 hover:text-f97316 font-medium">Our Work</a></li>
                     <li><a href="#about" class="text-gray-600 hover:text-f97316 font-medium">About</a></li>
@@ -217,56 +322,93 @@
                     <li><a href="#contact" class="text-gray-600 hover:text-f97316 font-medium">Get a Quote</a></li>
                 </ul>
             </nav>
+
+            <button id="mobileMenuButton" class="md:hidden p-2 text-gray-700 hover:text-f97316 focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
         </div>
+
+        <nav id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-inner pt-2 pb-4">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="#samples" class="text-gray-700 hover:text-f97316 font-medium text-lg block py-2">Our Work</a></li>
+                <li><a href="#about" class="text-gray-700 hover:text-f97316 font-medium text-lg block py-2">About</a></li>
+                <li><a href="#how-it-works" class="text-gray-700 hover:text-f97316 font-medium text-lg block py-2">How it Works</a></li>
+                <li><a href="#faq" class="text-gray-700 hover:text-f97316 font-medium text-lg block py-2">FAQ</a></li>
+                <li><a href="#contact" class="text-f97316 hover:text-ea580c font-bold text-lg block py-2">Get a Quote</a></li>
+            </ul>
+        </nav>
     </header>
 
     <section class="gradient-bg text-white py-20 md:py-32 rounded-b-3xl shadow-xl bounce-animation">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-                Websites That Help You Win More Quotes And Book More Jobs Without Paying For Ads – Ready In Just 7 Days.
+                Websites That Turn Quotes Into Jobs Without Paying For Ads – Ready In Just 7 Days.
             </h1>
             <p class="text-xl md:text-2xl mb-10 opacity-90 max-w-3xl mx-auto">
-                Sick of inconsistent punters? Get a high-converting website built and start booking more jobs this week.
+                <b>Sick of inconsistent punters?</b> <br><br>Get a high-converting website and start booking more jobs this week!
             </p>
-            <a href="#contact" class="inline-block bg-white text-f97316 px-10 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300">
-                Get Your FREE Quote Now!
+            <a href="#contact" class="inline-block bg-white text-gray-900 px-10 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition duration-300">
+                Get Your FREE Quote!
             </a>
+        </div>
+    </section>
+
+    <section id="site-inclusions" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 section-title mx-auto">Site Inclusions</h2>
+            <p class="text-center text-lg text-gray-600 mb-6">Below are your standard inclusions:</p>
+            <div class="max-w-2xl mx-auto bg-gray-100 p-8 rounded-lg shadow-md">
+                <ul class="inclusions-list mb-6">
+                    <li>SEO Optimisation</li>
+                    <li>FREE Hosting</li>
+                    <li>SSL Certificate and Securities</li>
+                    <li>Site Speed Optimized</li>
+                    <li>Custom Quote Form / Integration of CMS Form</li>
+                    <li>NO ONGOING COSTS</li>
+                </ul>
+                <a href="#" id="addMoreFeaturesLink" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center text-lg">
+                    Add More Features <span class="ml-1 text-2xl font-bold">+</span>
+                </a>
+                <ul id="addedFeaturesDisplay" class="added-features-list mt-6 space-y-2 hidden">
+                    </ul>
+                <div class="text-center mt-10">
+                    <button id="getPriceButton" class="btn-primary text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg hover:transform hover:scale-105 transition duration-300">
+                        Get Price
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="samples" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title mx-auto">See Our Work in Action</h2>
-            <p class="text-center text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
-                Don't just take our word for it. Explore real examples of high-performing websites we've built from the ground up for businesses like yours.
+            <h2 class="text-4xl font-bold text-center mb-12 section-title mx-auto">Site Examples</h2>
+            <p class="text-left text-lg text-gray-600 mb-10 max-w-2xl mx-auto">
+                Check it out for yourself...<br><br> Below are some <b>live examples</b> of high performing websites built from the ground up!<br><br> Your customers want answers and they want them quick... <br><br> They want to know <b>what you do</b>, <b>where you do it</b>, and <b>how much it will cost them</b>. The site examples below are <i>high converting</i> because they keep it simple and get to the point (making it quicker and easier for customers to <i>get their quotes</i> and for you to <i>book more jobs</i>). <br><br>❌ No bullsh*t Squarespace sites <br>❌ No hack job templated sites <br><br>✅ Fair dinkum custom coded sites <br>✅ Loads faster than a rat up a drainpipe
             </p>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="sample-item bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Plumber+Website" alt="Plumber Website Sample" class="rounded-lg mb-4 w-full h-auto object-cover">
-                    <h3 class="text-2xl font-semibold mb-2">Ace Plumbing Solutions</h3>
-                    <p class="text-gray-600 mb-4">A sleek, mobile-first design focused on lead generation for a local plumber.</p>
-                    <a href="https://example.com/plumber-site" target="_blank" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center">
+                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Electrician+Website" class="rounded-lg mb-4 w-full h-auto object-cover">
+                    <a href="#" data-site-url="https://mmp03patane.github.io/ELECTRIC/" data-site-title="Sparky's Electrics Site" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center open-live-site-modal">
                         View Live Site
                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4 0h6m0 0l-6-6m6 6L14 10"></path></svg>
                     </a>
                 </div>
 
                 <div class="sample-item bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Electrician+Website" alt="Electrician Website Sample" class="rounded-lg mb-4 w-full h-auto object-cover">
-                    <h3 class="text-2xl font-semibold mb-2">Sparky's Electrics</h3>
-                    <p class="text-gray-600 mb-4">Fast loading and easy navigation to book electrical services instantly.</p>
-                    <a href="https://example.com/electrician-site" target="_blank" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center">
+                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Junk+Removal+Website" class="rounded-lg mb-4 w-full h-auto object-cover">
+                    <a href="#" data-site-url="https://mmp03patane.github.io/JUNK/" data-site-title="Junk - GitHub Pages Example" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center open-live-site-modal">
                         View Live Site
                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4 0h6m0 0l-6-6m6 6L14 10"></path></svg>
                     </a>
                 </div>
 
                 <div class="sample-item bg-gray-100 p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Landscaper+Website" alt="Landscaper Website Sample" class="rounded-lg mb-4 w-full h-auto object-cover">
-                    <h3 class="text-2xl font-semibold mb-2">GreenThumb Landscaping</h3>
-                    <p class="text-gray-600 mb-4">Beautiful galleries and clear service offerings for a landscaping business.</p>
-                    <a href="https://example.com/landscaper-site" target="_blank" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center">
+                    <img src="https://placehold.co/400x250/F97316/FFFFFF?text=Plumbing+Website" class="rounded-lg mb-4 w-full h-auto object-cover">
+                    <a href="#" data-site-url="https://mmp03patane.github.io/PLUMBING/" data-site-title="GreenThumb Landscaping Site" class="text-f97316 hover:text-ea580c font-bold inline-flex items-center open-live-site-modal">
                         View Live Site
                         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4 0h6m0 0l-6-6m6 6L14 10"></path></svg>
                     </a>
@@ -277,7 +419,7 @@
 
     <section id="about" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4 text-center max-w-3xl">
-            <h2 class="text-4xl font-bold text-center mb-12 section-title mx-auto">About Us</h2>
+            <h2 class="text-4xl font-bold text-center mb-12 section-title mx-auto">About Creative365</h2>
             <div class="bg-white rounded-lg shadow-md p-8">
                 <img src="https://github.com/mmp03patane/creative/blob/main/PROFILE%20PHOTO%203.PNG?raw=true" alt="Michael Patane Photo" class="profile-photo" />
                 <p class="mb-4">Hey everyone,</p>
@@ -399,12 +541,21 @@
         </div>
     </section>
 
+    <div id="liveSiteModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white p-2 rounded-lg shadow-xl max-w-5xl w-full h-[90vh] relative transform transition-all duration-300 scale-95 opacity-0" id="liveSiteModalContent">
+            <button id="closeLiveSiteModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold leading-none z-10">&times;</button>
+            <iframe id="liveSiteIframe" src="" frameborder="0" class="w-full h-[calc(100%-10px)] mt-0 rounded-md" allowfullscreen></iframe>
+            <p id="iframeError" class="text-red-600 text-center mt-4 hidden">This website cannot be displayed directly here due to security restrictions.</p>
+        </div>
+    </div>
+
+
     <div id="quoteModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
         <div class="bg-white p-8 rounded-lg shadow-xl max-w-md w-full relative transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
             <button id="closeQuoteModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold leading-none">&times;</button>
             <h3 class="text-3xl font-bold text-center text-f97316 mb-6">Let's Get You More Leads!</h3>
             <p class="text-center text-gray-600 mb-6">Fill out the form below to schedule a call with Michael and discuss your project. We'll confirm the exact time via email.</p>
-            
+
             <form id="creative365ContactForm" method="POST" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT_HERE" class="space-y-4">
                 <div class="form-group-creative">
                     <label for="fullName">Your Full Name<span style="color:red;">*</span></label>
@@ -443,7 +594,7 @@
                     <span class="form-error-message" id="timeSlotError" style="display: none;"></span>
                     <p style="font-size: 0.9rem; color: #555; margin-top: 0.5rem; text-align: left;">This is a request; we will confirm exact availability.</p>
                 </div>
-                
+
                 <div class="form-group-creative">
                     <label class="block text-gray-700 text-sm font-semibold mb-2">Do you have your own custom domain?<span style="color:red;">*</span></label>
                     <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
@@ -488,6 +639,37 @@
         </div>
     </div>
 
+    <div id="addFeaturesModal" class="feature-modal">
+        <div class="feature-modal-content">
+            <button id="closeFeaturesModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold leading-none">&times;</button>
+            <h3 class="text-2xl font-bold text-center text-f97316 mb-6">Add More Features</h3>
+            <p class="text-center text-gray-600 mb-6">Select additional features for your website:</p>
+            
+            <div class="feature-checkbox-group">
+                <label>
+                    <input type="checkbox" name="feature" value="Additional Revisions" data-display-text="Additional Revisions">
+                    Additional Revisions
+                </label>
+                <label>
+                    <input type="checkbox" name="feature" value="Additional Pages" data-display-text="Additional Pages">
+                    Additional Pages
+                </label>
+                <label>
+                    <input type="checkbox" name="feature" value="Special Functions (e.g., Calendar, Calculator)" data-display-text="Special Functions (Calendar, Calculator)">
+                    Special Functions (e.g., Calendar, Calculator)
+                </label>
+                <label>
+                    <input type="checkbox" name="feature" value="Link to Google Reviews" data-display-text="Link to Google Reviews">
+                    Link to Google Reviews
+                </label>
+            </div>
+            
+            <button id="saveFeaturesButton" class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transform hover:scale-105 transition duration-300">
+                Save Features
+            </button>
+        </div>
+    </div>
+
 
     <footer class="bg-gray-900 text-white py-10">
         <div class="container mx-auto px-4 text-center">
@@ -502,9 +684,8 @@
                 const accordionContent = button.nextElementSibling;
                 const icon = button.querySelector('svg');
 
-                button.classList.toggle('bg-gray-100'); // Toggle background on click
+                button.classList.toggle('bg-gray-100'); 
 
-                // Close other open accordions
                 document.querySelectorAll('.accordion-button').forEach(otherButton => {
                     if (otherButton !== button && otherButton.classList.contains('bg-gray-100')) {
                         otherButton.classList.remove('bg-gray-100');
@@ -518,17 +699,33 @@
             });
         });
 
+        // --- Mobile Menu Functionality ---
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuItems = mobileMenu.querySelectorAll('a'); 
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        mobileMenuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+        // --- END Mobile Menu Functionality ---
+
+
         // Quote Modal Functionality
         const openQuoteModalBtn = document.getElementById('openQuoteModal');
         const closeQuoteModalBtn = document.getElementById('closeQuoteModal');
         const quoteModal = document.getElementById('quoteModal');
         const modalContent = document.getElementById('modalContent');
-        const creative365ContactForm = document.getElementById('creative365ContactForm'); // Changed form ID
+        const creative365ContactForm = document.getElementById('creative365ContactForm'); 
         const formMessage = document.getElementById('formMessage');
 
         openQuoteModalBtn.addEventListener('click', () => {
             quoteModal.classList.remove('hidden');
-            // Animate modal in
             setTimeout(() => {
                 modalContent.classList.remove('scale-95', 'opacity-0');
                 modalContent.classList.add('scale-100', 'opacity-100');
@@ -536,23 +733,20 @@
         });
 
         closeQuoteModalBtn.addEventListener('click', () => {
-            // Animate modal out
             modalContent.classList.remove('scale-100', 'opacity-100');
             modalContent.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
                 quoteModal.classList.add('hidden');
-            }, 300); // Allow time for animation
+            }, 300);
         });
 
-        // Close modal when clicking outside of it
         quoteModal.addEventListener('click', (e) => {
             if (e.target === quoteModal) {
-                // Animate modal out
                 modalContent.classList.remove('scale-100', 'opacity-100');
                 modalContent.classList.add('scale-95', 'opacity-0');
                 setTimeout(() => {
                     quoteModal.classList.add('hidden');
-                }, 300); // Allow time for animation
+                }, 300);
             }
         });
 
@@ -571,7 +765,6 @@
             const preferredTimeSlot = document.getElementById('preferredTimeSlot');
             const message = document.getElementById('message');
 
-            // Simple validation example (can be expanded)
             if (fullName.value.trim() === '') {
                 document.getElementById('nameError').textContent = 'Full Name is required.';
                 document.getElementById('nameError').style.display = 'block';
@@ -598,7 +791,7 @@
 
             const selectedDate = new Date(preferredDate.value);
             const now = new Date();
-            now.setHours(0, 0, 0, 0); // Reset time for comparison
+            now.setHours(0, 0, 0, 0); 
             const tomorrow = new Date(now);
             tomorrow.setDate(now.getDate() + 1);
 
@@ -610,7 +803,6 @@
                 document.getElementById('dateError').style.display = 'none';
             }
 
-
             if (preferredTimeSlot.value === '') {
                 document.getElementById('timeSlotError').textContent = 'Please select a preferred time slot.';
                 document.getElementById('timeSlotError').style.display = 'block';
@@ -619,7 +811,6 @@
                 document.getElementById('timeSlotError').style.display = 'none';
             }
 
-             // Validate radio buttons for domain and CMS
             const hasDomainRadios = document.querySelectorAll('input[name="hasDomain"]');
             const usesCMSRadios = document.querySelectorAll('input[name="usesCMS"]');
             
@@ -627,11 +818,9 @@
             let isCmsSelected = Array.from(usesCMSRadios).some(radio => radio.checked);
 
             if (!isDomainSelected) {
-                // You might want to add a visible error message here if the styling allows
                 isValid = false;
             }
             if (!isCmsSelected) {
-                // You might want to add a visible error message here if the styling allows
                 isValid = false;
             }
 
@@ -643,7 +832,6 @@
                 document.getElementById('messageError').style.display = 'none';
             }
 
-
             if (!isValid) {
                 formMessage.textContent = 'Please correct the errors in the form.';
                 formMessage.classList.remove('text-gray-600');
@@ -651,10 +839,14 @@
                 return;
             }
 
-            const formData = new FormData(creative365ContactForm); // Use FormData for the new form
+            const formData = new FormData(creative365ContactForm); 
+            
+            // Append selected features to form data
+            document.querySelectorAll('#addedFeaturesDisplay li').forEach(item => {
+                formData.append('Added_Feature[]', item.textContent.trim());
+            });
 
             try {
-                // Send form data to Formspree
                 const response = await fetch(creative365ContactForm.action, {
                     method: creative365ContactForm.method,
                     body: formData,
@@ -664,14 +856,13 @@
                 });
 
                 if (response.ok) {
-                    let llmResponseText = "Thank you for your submission! We've received your request and will be in touch shortly.";
-                    
-                    // You can still integrate an LLM for a more dynamic message after Formspree success if desired
-                    // For now, we'll use a static success message.
                     formMessage.textContent = "Awesome! Your request has been sent. Michael will be in touch within 24-48 hours to discuss how we can get your quote-generating machine built!";
                     formMessage.classList.remove('text-gray-600', 'text-red-600');
                     formMessage.classList.add('text-green-600');
-                    creative365ContactForm.reset(); // Clear the form
+                    creative365ContactForm.reset(); 
+                    // Optionally clear added features display after submission
+                    document.getElementById('addedFeaturesDisplay').innerHTML = '';
+                    document.getElementById('addedFeaturesDisplay').classList.add('hidden');
                 } else {
                     const data = await response.json();
                     if (data.errors) {
@@ -692,13 +883,117 @@
 
         // Initialize accordion state on load
         document.addEventListener('DOMContentLoaded', () => {
-            // Apply bounce animation to the hero section on load
-            const heroSection = document.querySelector('.gradient-bg'); // Changed to match class
+            const heroSection = document.querySelector('.gradient-bg'); 
             if (heroSection) {
                 heroSection.classList.add('bounce-animation');
             }
         });
 
+        // Live Site iFrame Modal Functionality
+        const liveSiteModal = document.getElementById('liveSiteModal');
+        const liveSiteModalContent = document.getElementById('liveSiteModalContent');
+        const closeLiveSiteModalBtn = document.getElementById('closeLiveSiteModal');
+        const liveSiteIframe = document.getElementById('liveSiteIframe');
+        const iframeError = document.getElementById('iframeError');
+
+        document.querySelectorAll('.open-live-site-modal').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault(); 
+
+                const siteUrl = button.getAttribute('data-site-url');
+                const siteTitle = button.getAttribute('data-site-title'); 
+
+                liveSiteIframe.src = siteUrl;
+                iframeError.style.display = 'none';
+
+                liveSiteIframe.onload = function() {
+                    try {
+                        const iframeDoc = liveSiteIframe.contentWindow.document;
+                    } catch (e) {
+                        console.warn(`iFrame loading issue for ${siteTitle} at ${siteUrl}, possibly security restrictions:`, e);
+                        iframeError.style.display = 'block'; 
+                        liveSiteIframe.src = 'about:blank'; 
+                    }
+                };
+
+                liveSiteModal.classList.remove('hidden');
+                setTimeout(() => {
+                    liveSiteModalContent.classList.remove('scale-95', 'opacity-0');
+                    liveSiteModalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            });
+        });
+
+        closeLiveSiteModalBtn.addEventListener('click', () => {
+            liveSiteModalContent.classList.remove('scale-100', 'opacity-100');
+            liveSiteModalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                liveSiteModal.classList.add('hidden');
+                liveSiteIframe.src = ''; 
+                liveSiteIframe.onload = null; 
+            }, 300);
+        });
+
+        liveSiteModal.addEventListener('click', (e) => {
+            if (e.target === liveSiteModal) {
+                liveSiteModalContent.classList.remove('scale-100', 'opacity-100');
+                liveSiteModalContent.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    liveSiteModal.classList.add('hidden');
+                    liveSiteIframe.src = ''; 
+                    liveSiteIframe.onload = null; 
+                }, 300);
+            }
+        });
+
+        // New "Add More Features" Modal Functionality
+        const addMoreFeaturesLink = document.getElementById('addMoreFeaturesLink');
+        const addFeaturesModal = document.getElementById('addFeaturesModal');
+        const closeFeaturesModalBtn = document.getElementById('closeFeaturesModal');
+        const saveFeaturesButton = document.getElementById('saveFeaturesButton');
+        const addedFeaturesDisplay = document.getElementById('addedFeaturesDisplay');
+        const featureCheckboxes = document.querySelectorAll('#addFeaturesModal input[name="feature"]');
+
+        addMoreFeaturesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            addFeaturesModal.classList.add('active');
+            // Reset checkboxes state when opening the modal
+            featureCheckboxes.forEach(checkbox => {
+                const featureText = checkbox.dataset.displayText;
+                checkbox.checked = Array.from(addedFeaturesDisplay.children).some(li => li.textContent.trim() === featureText);
+            });
+        });
+
+        closeFeaturesModalBtn.addEventListener('click', () => {
+            addFeaturesModal.classList.remove('active');
+        });
+
+        addFeaturesModal.addEventListener('click', (e) => {
+            if (e.target === addFeaturesModal) {
+                addFeaturesModal.classList.remove('active');
+            }
+        });
+
+        saveFeaturesButton.addEventListener('click', () => {
+            addedFeaturesDisplay.innerHTML = ''; // Clear previous selections
+            let hasAddedFeatures = false;
+            featureCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = checkbox.dataset.displayText;
+                    addedFeaturesDisplay.appendChild(listItem);
+                    hasAddedFeatures = true;
+                }
+            });
+
+            if (hasAddedFeatures) {
+                addedFeaturesDisplay.classList.remove('hidden');
+            } else {
+                addedFeaturesDisplay.classList.add('hidden');
+            }
+
+            addFeaturesModal.classList.remove('active');
+        });
     </script>
 </body>
 </html>
